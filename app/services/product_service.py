@@ -1122,6 +1122,8 @@ class ProductService:
     def _build_query_core(product_name: str) -> CoreProductResponse:
         normalized = product_name.strip()
         query_keywords = title_keywords(normalized)[:8]
+        category = query_keywords[0].title() if query_keywords else normalized or "query"
+        product_type = query_keywords[1].title() if len(query_keywords) > 1 else category
         attributes: dict[str, str] = {
             "query": normalized,
             "query_keywords": ", ".join(query_keywords),
@@ -1129,13 +1131,13 @@ class ProductService:
 
         return CoreProductResponse(
             normalized_title=normalized,
-            category="Query Derived",
-            product_type="query derived product",
+            category=category,
+            product_type=product_type,
             product_summary=f"Dynamic pricing lookup for {normalized}.",
             features=[
                 f"Query-driven pricing for {normalized}.",
-                "Uses live Google search evidence.",
-                "Ignores mismatched variants and outliers.",
+                f"Search keywords: {', '.join(query_keywords) if query_keywords else normalized}.",
+                "Uses live Google search evidence and ignores mismatched variants.",
             ],
             attributes=attributes,
             source_title=normalized,
