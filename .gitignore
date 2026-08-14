@@ -11,7 +11,6 @@ output/
 .venv
 
 # Local environment files
-.env
 client-presentation-summary.txt
 product-ai-agent-client-presentation.pptx
 generate_client_presentation.py
@@ -19,3 +18,5 @@ branch_structure.json
 temp_auto_push.bat
 temp_interactive_push.bat
 .gitignore
+config.bat
+node_modules
